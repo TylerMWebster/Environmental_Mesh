@@ -1,4 +1,4 @@
-from SerialProcessor import *
+from serial_processor import *
 from multiprocessing import Process, Queue
 from utils import *
 from datetime import date
@@ -6,12 +6,13 @@ import time
 import sys
 import json
 import ast
+import numpy as np
 
 ports = list_ports()
 print(ports)
 
 today = date.today()
-file_name = today.strftime("%m_%d_%Y") + "_0"
+file_name = 'data/' + today.strftime("%m_%d_%Y") + "_0"
 file_name = next_log(file_name, '.csv')
 
 sp = SerialProcessor(ports[0], 9600, 'test')
