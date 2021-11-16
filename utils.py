@@ -26,7 +26,7 @@ def straight_to_csv(file_name, row):
     for item in vals:
         flt_vals.append(float(item))
   
-    flt_vals = t + flt_vals + [k_to_f(requests.get(url).json()['current']['temp'])]
+    flt_vals = t + flt_vals #+ [k_to_f(requests.get(url).json()['current']['temp'])]
     print(flt_vals)
     array_to_csv(file_name, flt_vals)
     
