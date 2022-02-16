@@ -8,8 +8,8 @@ import json
 import ast
 import numpy as np
 
-FAST_RATE = 1000
-SLOW_RATE = 360000
+FAST_RATE = 3000
+SLOW_RATE = 60000
 
 first_run = True
 set_slow = False
@@ -50,8 +50,6 @@ try:
         if((time.time() - start_time) >= 15 and not set_slow):
             print('Setting slow rate')
             try:
-                sp.sendMessage(SLOW_RATE)
-                sp.sendMessage(SLOW_RATE)
                 sp.sendMessage(SLOW_RATE)
                 set_slow = True
             except: 

@@ -20,12 +20,12 @@ OneWire oneWire2(ONE_WIRE_BUS_TWO);
 DallasTemperature sensors(&oneWire);
 DallasTemperature sensors2(&oneWire2);
 /********************************************************************/
-float strt_time;
-float curr_time;
+double strt_time;
+double curr_time;
 int device_count;
 int device_count2;
 int total_device_count = 0;
-long ms_between_reads = 15000;
+double ms_between_reads = 3000;
 
 DeviceAddress addrs[MAX_SENSORS];
 DeviceAddress addrs2[MAX_SENSORS];
@@ -43,15 +43,15 @@ void setup(void)
   total_device_count += device_count + device_count2;
   Serial.print("Total number of devices on network: ");
   Serial.println(total_device_count);
-  curr_time = millis();
+  curr_time = double(millis());
 }
 
 
 void loop(void)
 {
   getInput();
-  if (millis() - curr_time >= ms_between_reads) {
-    curr_time = millis();
+  if (double(millis()) - curr_time >= double(ms_between_reads)) {
+    curr_time = double(millis());
     sensors.requestTemperatures();// Send the command to get temperature readings
     sensors.setWaitForConversion(true);
     sensors2.requestTemperatures();// Send the command to get temperature readings
