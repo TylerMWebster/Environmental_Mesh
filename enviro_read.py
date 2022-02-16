@@ -15,7 +15,7 @@ ports = list_ports()
 print(ports)
 
 today = date.today()
-file_name = 'data/' + today.strftime("%m_%d_%Y") + "_0"
+file_name = today.strftime("%m_%d_%Y") + "_0"
 file_name = next_log(file_name, '.csv')
 
 sp = SerialProcessor(ports[0], 9600, 'test')
