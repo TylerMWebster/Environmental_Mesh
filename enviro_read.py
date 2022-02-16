@@ -8,7 +8,7 @@ import json
 import ast
 import numpy as np
 
-FAST_RATE = 2000
+FAST_RATE = 15000
 SLOW_RATE = 60000
 
 ports = list_ports()
@@ -27,6 +27,7 @@ except:
     print('Could not sett polling rate')
 
 first_run = True
+set_slow = False
 start_time = time.time()
 try:
     while sp.is_running:
@@ -46,9 +47,12 @@ try:
                 print("fail")
         else:
             print(line)
-        if(time.time() - start_time >= 15):
+        if((time.time() - start_time) >= 15 and not set_slow):
             print('Setting slow rate')
             sp.sendMessage(SLOW_RATE)
+            sp.sendMessage(SLOW_RATE)
+            sp.sendMessage(SLOW_RATE)
+            set_slow = True
         
 except KeyboardInterrupt:
     print('Terminated')
