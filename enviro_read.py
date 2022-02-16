@@ -9,7 +9,7 @@ import ast
 import numpy as np
 
 FAST_RATE = 1000
-SLOW_RATE = 60000
+SLOW_RATE = 360000
 
 first_run = True
 set_slow = False
