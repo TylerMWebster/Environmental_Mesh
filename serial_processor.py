@@ -61,7 +61,7 @@ class SerialProcessor:
         self.is_running = False
         self.sr.close()
 
-    def sendMessage(self, command, value):
+    def sendMessage(self, value):
         message = str(value)
         try:
             self.sr.write(message.encode('ascii'))
