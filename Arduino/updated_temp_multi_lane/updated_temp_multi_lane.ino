@@ -25,7 +25,7 @@ float curr_time;
 int device_count;
 int device_count2;
 int total_device_count = 0;
-int ms_between_reads = 15000;
+long ms_between_reads = 15000;
 
 DeviceAddress addrs[MAX_SENSORS];
 DeviceAddress addrs2[MAX_SENSORS];
@@ -118,8 +118,9 @@ void getInput() {
   bool headFound = false;
   if (Serial.available() > 0) {
     String msg = String(Serial.readString());
-    int value = msg.toInt();
+    long value = msg.toInt();
     ms_between_reads = value;
+    //Serial.println(ms_between_reads);
   }
 }
 
@@ -160,3 +161,4 @@ int discoverNetwork(DallasTemperature sense, DeviceAddress address_array[], int 
   }
   Serial.println("All Adresses Found");
   return dev_count;
+}
