@@ -8,6 +8,9 @@ import json
 import ast
 import numpy as np
 
+FAST_RATE = 2000
+SLOW_RATE = 60000
+
 ports = list_ports()
 print(ports)
 
@@ -17,8 +20,13 @@ file_name = next_log(file_name, '.csv')
 
 sp = SerialProcessor(ports[0], 9600, 'test')
 sp.go()
+try:
+    sp.sendMessage(FAST_RATE)
+except:
+    print('Could not sett polling rate')
 
 first_run = True
+start_time = time.time()
 try:
     while sp.is_running:
         line =  str(sp.queue.get())
@@ -37,6 +45,8 @@ try:
                 print("fail")
         else:
             print(line)
+        if(time.time() - start_time >= 15):
+            sp.sendMessage(SLOW_RATE)
         
 except KeyboardInterrupt:
     print('Terminated')

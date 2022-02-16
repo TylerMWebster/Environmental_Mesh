@@ -62,7 +62,7 @@ class SerialProcessor:
         self.sr.close()
 
     def sendMessage(self, command, value):
-        message = '/' + command + '/' + str(value)
+        message = str(value)
         try:
             self.sr.write(message.encode('ascii'))
             time.sleep(.05)
