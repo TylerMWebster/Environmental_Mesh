@@ -21,6 +21,7 @@ file_name = next_log(file_name, '.csv')
 sp = SerialProcessor(ports[0], 9600, 'test')
 sp.go()
 try:
+    print('Setting fast rate')
     sp.sendMessage(FAST_RATE)
 except:
     print('Could not sett polling rate')
@@ -46,6 +47,7 @@ try:
         else:
             print(line)
         if(time.time() - start_time >= 15):
+            print('Setting slow rate')
             sp.sendMessage(SLOW_RATE)
         
 except KeyboardInterrupt:
