@@ -8,8 +8,12 @@ import json
 import ast
 import numpy as np
 
-FAST_RATE = 15000
+FAST_RATE = 1000
 SLOW_RATE = 60000
+
+first_run = True
+set_slow = False
+start_time = time.time()
 
 ports = list_ports()
 print(ports)
@@ -24,19 +28,15 @@ try:
     print('Setting fast rate')
     sp.sendMessage(FAST_RATE)
 except:
-    print('Could not sett polling rate')
+    print('Could not set polling rate')
 
-first_run = True
-set_slow = False
-start_time = time.time()
+
 try:
     while sp.is_running:
         line =  str(sp.queue.get())
         if "{" in line:
             try:
                 line_dict = ast.literal_eval(line)
-                #print(line_dict)
-                #dict_to_json(file_name, line_dict)
                
                 if first_run:
                     make_csv(file_name, line_dict)
@@ -49,10 +49,13 @@ try:
             print(line)
         if((time.time() - start_time) >= 15 and not set_slow):
             print('Setting slow rate')
-            sp.sendMessage(SLOW_RATE)
-            sp.sendMessage(SLOW_RATE)
-            sp.sendMessage(SLOW_RATE)
-            set_slow = True
+            try:
+                sp.sendMessage(SLOW_RATE)
+                sp.sendMessage(SLOW_RATE)
+                sp.sendMessage(SLOW_RATE)
+                set_slow = True
+            except: 
+                print('Could not set polling rate')
         
 except KeyboardInterrupt:
     print('Terminated')
