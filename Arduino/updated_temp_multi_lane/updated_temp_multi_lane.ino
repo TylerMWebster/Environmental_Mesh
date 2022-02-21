@@ -1,4 +1,3 @@
-/********************************************************************/
 // include the libraries
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -59,7 +58,7 @@ void loop(void)
     String json = "";
     json += "{";
 
-    // Print JSON format to serial
+    //Print JSON format to serial
 
     //Add data for first run of sensors
     for (int i = 0; i < device_count; i++) {
@@ -107,14 +106,13 @@ void loop(void)
       }
     }
     json += "}";
-
     //Serial.print(sensors.getTempF(a));
-
     Serial.println(json);
   }
 }
 
-void getInput() {
+void getInput() 
+{
   bool headFound = false;
   if (Serial.available() > 0) {
     String msg = String(Serial.readString());
@@ -123,7 +121,6 @@ void getInput() {
     //Serial.println(ms_between_reads);
   }
 }
-
 
 // function to print a device address
 void printAddress(DeviceAddress deviceAddress)
@@ -137,8 +134,8 @@ void printAddress(DeviceAddress deviceAddress)
 }
 
 // Function to discover network size and sensor adresses
-int discoverNetwork(DallasTemperature sense, DeviceAddress address_array[], int dev_count) {
-
+int discoverNetwork(DallasTemperature sense, DeviceAddress address_array[], int dev_count) 
+{
   DeviceAddress this_add;
 
   // Find network size
@@ -155,7 +152,6 @@ int discoverNetwork(DallasTemperature sense, DeviceAddress address_array[], int 
 
     // Copy array of 8 bytes representing address to sensor address array
     memcpy(address_array[i], this_add, sizeof(address_array[i]));
-
     printAddress(this_add);
     Serial.println();
   }
