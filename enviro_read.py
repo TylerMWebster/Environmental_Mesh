@@ -10,11 +10,12 @@ import ast
 import numpy as np
 
 FAST_RATE = '/tim/01000'
-SLOW_RATE = '/tim/03000'
+SLOW_RATE = '/tim/60000'
 RESET_COMMAND = '/rst/99999'
 
 
-TIMEOUT = 30
+END_OF_STARTUP = 30
+TIMEOUT = 120
 ACTUAL_SENSORS = 10
 num_sensors = 0
 all_found = False
@@ -64,11 +65,13 @@ try:
                     time.sleep(2)
                 else: 
                     print('System discovery timeout reached')
+                    sp.sendMessage(RESET_COMMAND)
+                    time.sleep(2)
                     all_found = True
                 
         else:
             print(line)
-        if((time.time() - start_time) >= 15 and not set_slow and all_found):
+        if((time.time() - start_time) >= END_OF_STARTUP and not set_slow and all_found):
             print('Setting slow rate')
             try:
                 sp.sendMessage(SLOW_RATE)

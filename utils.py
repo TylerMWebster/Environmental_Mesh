@@ -33,7 +33,7 @@ def straight_to_csv(file_name, row):
 def make_csv(file_name, row):
     title = ['time']
     keys = list(row.keys())
-    title = title + keys + ["forecasted"]
+    title = title + keys #+ ["forecasted"]
     print(title)
     array_to_csv(file_name, title)
     
