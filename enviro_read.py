@@ -68,6 +68,8 @@ try:
                     sp.sendMessage(RESET_COMMAND)
                     time.sleep(2)
                     all_found = True
+            else:
+                all_found = True
                 
         else:
             print(line)
