@@ -186,11 +186,11 @@ void getInput() {
     String msg = String(Serial.readString());
     String head = msg.substring(1, 4);
     long value = msg.substring(5, 10).toInt();
-    Serial.print(head); Serial.print("   "); Serial.println(value);
-    
+    //Serial.print(head); Serial.print("   "); Serial.println(value);
+
     if (head == "tim") {
       ms_between_reads = value;
-      Serial.println(ms_between_reads);
+      //Serial.println(ms_between_reads);
     }
     if (head == "rst") {
       // Rediscover the network
