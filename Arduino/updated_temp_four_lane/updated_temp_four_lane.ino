@@ -75,7 +75,7 @@ void loop(void)
     sensors2.setWaitForConversion(true);
     sensors3.requestTemperatures();// Send the command to get temperature readings
     sensors3.setWaitForConversion(true);
-    
+
     String json = "";
     json += "{";
 
@@ -126,8 +126,9 @@ void loop(void)
         json += ", ";
       }
     }
+    json += ", ";
 
-    
+
     //Add data for third run of sensors
     for (int i = 0; i < device_count2; i++) {
       json += "\"";
@@ -147,8 +148,9 @@ void loop(void)
         json += ", ";
       }
     }
+    json += ", ";
 
-    
+
     //Add data for forth run of sensors
     for (int i = 0; i < device_count3; i++) {
       json += "\"";
@@ -182,8 +184,25 @@ void getInput() {
   bool headFound = false;
   if (Serial.available() > 0) {
     String msg = String(Serial.readString());
-    long value = msg.toInt();
-    ms_between_reads = value;
+    String head = msg.substring(1, 4);
+    long value = msg.substring(5, 10).toInt();
+    Serial.print(head); Serial.print("   "); Serial.println(value);
+    
+    if (head == "tim") {
+      ms_between_reads = value;
+      Serial.println(ms_between_reads);
+    }
+    if (head == "rst") {
+      // Rediscover the network
+      total_device_count = 0;
+      device_count = discoverNetwork(sensors, addrs, device_count);
+      device_count1 = discoverNetwork(sensors1, addrs1, device_count1);
+      device_count2 = discoverNetwork(sensors2, addrs2, device_count2);
+      device_count3 = discoverNetwork(sensors3, addrs3, device_count3);
+      total_device_count += device_count + device_count1 + device_count2 + device_count3;
+      Serial.print("Total number of devices on network: ");
+      Serial.println(total_device_count);
+    }
     //Serial.println(ms_between_reads);
   }
 }

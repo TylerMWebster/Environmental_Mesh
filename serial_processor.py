@@ -38,6 +38,10 @@ class SerialProcessor:
         self.com = com
         self.baud = baud
         self.csvname = csvname + '_' + str(self.com) + '_' + str(self.baud)
+
+
+    def go(self):
+        
         try:
             self.sr = serial.Serial(port=self.com, baudrate=self.baud)
             self.sr.flushInput()
@@ -46,7 +50,7 @@ class SerialProcessor:
         except:
             print('Cannot reach this serial port')
             sys.exit(0)
-
+        
         try:
             print('Attempting to initialize reading thread')
             self.read = Thread(target=self.readData)
@@ -54,12 +58,13 @@ class SerialProcessor:
         except:
             print('Failed to initialize process')
 
-    def go(self):
         self.read.start()
 
     def quit(self):
         self.is_running = False
+        self.read.should_abort_immediately = True
         self.sr.close()
+        self.read.join()
 
     def sendMessage(self, value):
         message = str(value)
