@@ -49,7 +49,7 @@ def run_socket(HOST , PORT):
                 print('Client disconnected')
                 break
             if recieved in ('go'):
-                conn.sendall(data_json, encoding="utf-8")
+                conn.sendall(bytes(data_json, encoding="utf-8"))
         conn.close()
 
 HOST = "192.168.43.68"
