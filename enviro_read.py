@@ -16,7 +16,7 @@ RESET_COMMAND = '/rst/99999'
 
 END_OF_STARTUP = 30
 TIMEOUT = 120
-ACTUAL_SENSORS = 16
+ACTUAL_SENSORS = 2
 num_sensors = 0
 all_found = False
 
