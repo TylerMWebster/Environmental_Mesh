@@ -15,7 +15,7 @@ from threading import Thread
 
 
 FAST_RATE = '/tim/01000'
-SLOW_RATE = '/tim/60000'
+SLOW_RATE = '/tim/01000'
 RESET_COMMAND = '/rst/99999'
 END_OF_STARTUP = 30
 TIMEOUT = 120
@@ -113,6 +113,7 @@ try:
                 print('Could not set polling rate')
         
 except KeyboardInterrupt:
+    socket_thread.join()
     print('Terminated')
 
 sp.quit()
