@@ -2,6 +2,7 @@ import socket
 import random
 import json
 from threading import Thread
+import time
 
 def run_socket(HOST , PORT):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,12 +12,20 @@ def run_socket(HOST , PORT):
         conn, addr = s.accept()
         print(f"Connected by {addr}")
         while True: 
-            recieved = conn.recv(1024).decode("utf-8")
-            if not recieved:
-                print('Client disconnected')
+            #recieved = conn.recv(1024).decode("utf-8")
+            #if not recieved:
+            #    print('Client disconnected')
+            #    break
+            #if recieved in ('go'):
+            try:
+                data = generate_data(4)
+                conn.sendall(bytes(data, encoding="utf-8"))
+                print(data)
+                time.sleep(0.5)
+            except Exception as e:
+                print(e)
                 break
-            if recieved in ('go'):
-                conn.sendall(bytes(generate_data(4), encoding="utf-8"))
+                
         conn.close()
             
 
@@ -32,7 +41,7 @@ def generate_data(length):
 
 #HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 #HOST = "172.28.120.37"
-HOST = "192.168.43.68"
+HOST = "192.168.43.28"
 PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
 
 socket_thread = Thread(target=run_socket, args=(HOST, PORT))
